@@ -13,3 +13,8 @@ Helm validate
 ```
 $ helm lint hello-world-spring-boot-helm
 ```
+
+Helm install or upgrade
+```
+$ helm upgrade --install hello-world-spring-boot-helm .
+```
