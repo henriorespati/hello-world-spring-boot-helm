@@ -6,12 +6,7 @@ replicaCount: 1
 
 namespace: ns-dev
 name: hello-world-spring-boot-helm
-
-image:
-  repository: image-registry.openshift-image-registry.svc:5000/cicd/hello-world-spring-boot-helm
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+registry: image-registry.openshift-image-registry.svc:5000
 
 imagePullSecrets: []
 nameOverride: ""
