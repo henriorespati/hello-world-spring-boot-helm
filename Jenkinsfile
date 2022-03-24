@@ -21,7 +21,7 @@ node('maven-helm') {
         dir("source") {
             sh "oc new-build .  \
                         --name=hello-world-spring-boot-helm \
-                        --image-stream=openshift/openjdk-11-rhel8:1.0  || true"
+                        --image-stream=openshift/ubi8-openjdk-11:1.3  || true"
             sh "oc start-build hello-world-spring-boot-helm --from-dir=build-folder/. --follow --wait "
             sh "oc tag cicd/hello-world-spring-boot-helm:latest ns-dev/hello-world-spring-boot-helm:${BUILD_NUMBER} "
 
