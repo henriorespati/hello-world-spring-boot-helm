@@ -8,6 +8,7 @@ namespace: ns-dev
 name: hello-world-spring-boot-helm
 tag: latest
 registry: image-registry.openshift-image-registry.svc:5000
+env: dev
 
 imagePullSecrets: []
 nameOverride: ""

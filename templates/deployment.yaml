@@ -27,12 +27,23 @@ spec:
       serviceAccountName: {{ include "hello-world-spring-boot-helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+          - name: app-config-mnt
+            configMap:
+                name: {{ .Values.name }}-configs
+                defaultMode: 420
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.registry }}/{{ .Values.namespace }}/{{ .Values.name }}:{{ .Values.tag }}"
           imagePullPolicy: IfNotPresent
+          volumeMounts:
+              - name: app-config-mnt
+                mountPath: /tmp/configs
+          env:
+              - name: SPRING_CONFIG_LOCATION
+                value: /tmp/configs/application-{{ .Values.env }}.properties
           ports:
             - name: http
               containerPort: 8080
