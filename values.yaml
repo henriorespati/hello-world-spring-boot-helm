@@ -9,6 +9,7 @@ name: hello-world-spring-boot-helm
 tag: latest
 registry: image-registry.openshift-image-registry.svc:5000
 env: dev
+gitCommit: 1
 
 imagePullSecrets: []
 nameOverride: ""

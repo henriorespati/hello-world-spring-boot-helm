@@ -4,6 +4,7 @@ metadata:
   name: {{ include "hello-world-spring-boot-helm.fullname" . }}
   labels:
     {{- include "hello-world-spring-boot-helm.labels" . | nindent 4 }}
+    GIT_COMMIT : {{ .Values.gitCommit }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -30,7 +31,7 @@ spec:
       volumes:
           - name: app-config-mnt
             configMap:
-                name: {{ .Values.name }}-configs
+                name: {{ .Values.name }}-{{ .Values.tag }}-configs
                 defaultMode: 420
       containers:
         - name: {{ .Chart.Name }}
