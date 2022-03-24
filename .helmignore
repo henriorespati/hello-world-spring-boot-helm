@@ -21,3 +21,8 @@
 .idea/
 *.tmproj
 .vscode/
+
+# dont bring apps artifact
+log/
+target/
+*.jar
