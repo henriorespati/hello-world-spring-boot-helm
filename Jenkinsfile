@@ -13,15 +13,16 @@ node('maven-helm') {
             sh "mkdir properties-folder"
             sh "mvn -B clean package -Dmaven.repo.local=/tmp/source/m2"
 
+            sh "cp Dockerfile build-folder/"
             sh "cp target/*.jar build-folder/"
             sh "cp target/classes/*.properties properties-folder/"
         }
     }
     stage ('build and push') {
         dir("source") {
-            sh "oc new-build .  \
-                        --name=hello-world-spring-boot-helm \
-                        --image-stream=openshift/ubi8-openjdk-11:1.3  || true"
+            sh "oc new-build --strategy docker --binary  \
+                        --name hello-world-spring-boot-helm \
+                        --docker-image registry.access.redhat.com/ubi8/ubi-minimal:8.5  || true"
             sh "oc start-build hello-world-spring-boot-helm --from-dir=build-folder/. --follow --wait "
             sh "oc tag cicd/hello-world-spring-boot-helm:latest ns-dev/hello-world-spring-boot-helm:${BUILD_NUMBER} "
 
